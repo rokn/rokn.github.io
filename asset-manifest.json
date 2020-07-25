@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/static/css/main.396d7e14.chunk.css",
-    "main.js": "/static/js/main.ed68bd59.chunk.js",
-    "main.js.map": "/static/js/main.ed68bd59.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c3fa272d.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c3fa272d.js.map",
-    "static/js/2.8d3f7199.chunk.js": "/static/js/2.8d3f7199.chunk.js",
-    "static/js/2.8d3f7199.chunk.js.map": "/static/js/2.8d3f7199.chunk.js.map",
+    "main.js": "/static/js/main.f8c8fb8b.chunk.js",
+    "main.js.map": "/static/js/main.f8c8fb8b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.54c37f51.js",
+    "runtime-main.js.map": "/static/js/runtime-main.54c37f51.js.map",
+    "static/js/2.708f5d28.chunk.js": "/static/js/2.708f5d28.chunk.js",
+    "static/js/2.708f5d28.chunk.js.map": "/static/js/2.708f5d28.chunk.js.map",
     "static/css/3.48a93ee6.chunk.css": "/static/css/3.48a93ee6.chunk.css",
-    "static/js/3.501685f8.chunk.js": "/static/js/3.501685f8.chunk.js",
-    "static/js/3.501685f8.chunk.js.map": "/static/js/3.501685f8.chunk.js.map",
+    "static/js/3.bda10452.chunk.js": "/static/js/3.bda10452.chunk.js",
+    "static/js/3.bda10452.chunk.js.map": "/static/js/3.bda10452.chunk.js.map",
     "static/css/4.01c87591.chunk.css": "/static/css/4.01c87591.chunk.css",
     "static/js/4.c550d0e5.chunk.js": "/static/js/4.c550d0e5.chunk.js",
     "static/js/4.c550d0e5.chunk.js.map": "/static/js/4.c550d0e5.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.accee622817f215c455bd6581ad8bfdb.js": "/precache-manifest.accee622817f215c455bd6581ad8bfdb.js",
+    "precache-manifest.3dadf7dc15dc737035bd0922f81b58a9.js": "/precache-manifest.3dadf7dc15dc737035bd0922f81b58a9.js",
     "service-worker.js": "/service-worker.js",
     "static/css/3.48a93ee6.chunk.css.map": "/static/css/3.48a93ee6.chunk.css.map",
     "static/css/4.01c87591.chunk.css.map": "/static/css/4.01c87591.chunk.css.map",
@@ -34,9 +34,9 @@
     "static/media/TalkCard.css": "/static/media/talksCardBack.de3da806.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c3fa272d.js",
-    "static/js/2.8d3f7199.chunk.js",
+    "static/js/runtime-main.54c37f51.js",
+    "static/js/2.708f5d28.chunk.js",
     "static/css/main.396d7e14.chunk.css",
-    "static/js/main.ed68bd59.chunk.js"
+    "static/js/main.f8c8fb8b.chunk.js"
   ]
 }
