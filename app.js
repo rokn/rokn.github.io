@@ -39,6 +39,16 @@ function initParticles() {
   const particles = [];
   const particleCount = 80;
   const connectionDistance = 150;
+  const mouseConnectionDistance = 200;
+  const mouseAttractionForce = 0.008; // Reduced from 0.02 for gentler pull
+  const mouseRepulsionDistance = 50; // Distance at which particles are repelled
+
+  // Mouse position tracking
+  const mouse = {
+    x: null,
+    y: null,
+    radius: mouseConnectionDistance
+  };
 
   class Particle {
     constructor() {
@@ -47,14 +57,49 @@ function initParticles() {
       this.vx = (Math.random() - 0.5) * 0.5;
       this.vy = (Math.random() - 0.5) * 0.5;
       this.radius = Math.random() * 2 + 1;
+      this.baseVx = this.vx;
+      this.baseVy = this.vy;
     }
 
     update() {
+      // Apply mouse attraction with repulsion when too close
+      if (mouse.x != null && mouse.y != null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < mouseRepulsionDistance && distance > 0) {
+          // Repel particles that get too close
+          const repulsionForce = (1 - distance / mouseRepulsionDistance) * 0.05;
+          this.vx -= (dx / distance) * repulsionForce;
+          this.vy -= (dy / distance) * repulsionForce;
+        } else if (distance < mouse.radius && distance > 0) {
+          // Attract particles within range but not too close
+          const force = (1 - distance / mouse.radius) * mouseAttractionForce;
+          this.vx += (dx / distance) * force;
+          this.vy += (dy / distance) * force;
+        }
+      }
+
+      // Apply velocity damping to return to base speed
+      this.vx *= 0.98;
+      this.vy *= 0.98;
+
+      // Keep some base movement
+      this.vx += this.baseVx * 0.02;
+      this.vy += this.baseVy * 0.02;
+
       this.x += this.vx;
       this.y += this.vy;
 
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      if (this.x < 0 || this.x > canvas.width) {
+        this.vx *= -1;
+        this.baseVx *= -1;
+      }
+      if (this.y < 0 || this.y > canvas.height) {
+        this.vy *= -1;
+        this.baseVy *= -1;
+      }
     }
 
     draw() {
@@ -77,7 +122,7 @@ function initParticles() {
       particle.draw();
     });
 
-    // Draw connections
+    // Draw connections between particles
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -95,10 +140,39 @@ function initParticles() {
       }
     }
 
+    // Draw connections between mouse and nearby particles
+    if (mouse.x != null && mouse.y != null) {
+      particles.forEach(particle => {
+        const dx = mouse.x - particle.x;
+        const dy = mouse.y - particle.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < mouseConnectionDistance) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(124, 58, 237, ${(1 - distance / mouseConnectionDistance) * 0.4})`;
+          ctx.lineWidth = 2;
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+        }
+      });
+    }
+
     requestAnimationFrame(animate);
   }
 
   animate();
+
+  // Mouse event listeners - listen on window to capture all mouse movement
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
 
   window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
