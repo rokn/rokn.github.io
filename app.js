@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   populateLinks();
   populateContact();
   initTimeline();
+  initBioNeuralVisualization();
   setCurrentYear();
 });
 
@@ -915,3 +916,280 @@ const observeElements = () => {
 
 // Call after content is loaded
 setTimeout(observeElements, 500);
+
+// Bio-Neural Visualization - A merge of tech, AI, and biology
+function initBioNeuralVisualization() {
+  const canvas = document.getElementById('bio-neural-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const container = canvas.parentElement;
+
+  // Set canvas size
+  function resizeCanvas() {
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Mouse tracking
+  const mouse = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    isActive: false
+  };
+
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    mouse.isActive = true;
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    mouse.isActive = false;
+  });
+
+  // Neural Node Class - represents neurons/cells
+  class NeuralNode {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.baseX = x;
+      this.baseY = y;
+      this.radius = Math.random() * 4 + 3;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.connections = [];
+      this.energy = Math.random();
+      this.hue = Math.random() * 60 + 180; // Blue to purple range
+      this.pulsePhase = Math.random() * Math.PI * 2;
+      this.type = Math.random() > 0.7 ? 'special' : 'normal'; // Some special nodes
+    }
+
+    update() {
+      // Gentle floating movement
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // Return to base position
+      const dx = this.baseX - this.x;
+      const dy = this.baseY - this.y;
+      this.x += dx * 0.01;
+      this.y += dy * 0.01;
+
+      // Mouse interaction
+      if (mouse.isActive) {
+        const mdx = mouse.x - this.x;
+        const mdy = mouse.y - this.y;
+        const dist = Math.sqrt(mdx * mdx + mdy * mdy);
+
+        if (dist < 150) {
+          const force = (1 - dist / 150) * 0.5;
+          this.x += mdx * force * 0.02;
+          this.y += mdy * force * 0.02;
+        }
+      }
+
+      // Energy pulse
+      this.pulsePhase += 0.02;
+      this.energy = 0.5 + Math.sin(this.pulsePhase) * 0.5;
+
+      // Boundaries
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    }
+
+    draw() {
+      // Outer glow
+      const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 3);
+      gradient.addColorStop(0, `hsla(${this.hue}, 100%, 60%, ${this.energy * 0.3})`);
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius * 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Core node
+      ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${0.6 + this.energy * 0.4})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Special nodes get extra effects
+      if (this.type === 'special') {
+        ctx.strokeStyle = `hsla(${this.hue}, 100%, 70%, ${this.energy})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius + 3 + this.energy * 2, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Inner highlight
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.energy * 0.8})`;
+      ctx.beginPath();
+      ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Signal Particle - flows along connections
+  class SignalParticle {
+    constructor(x, y, targetX, targetY, color) {
+      this.x = x;
+      this.y = y;
+      this.startX = x;
+      this.startY = y;
+      this.targetX = targetX;
+      this.targetY = targetY;
+      this.progress = 0;
+      this.speed = 0.01 + Math.random() * 0.02;
+      this.color = color;
+      this.size = Math.random() * 2 + 1;
+      this.life = 1;
+    }
+
+    update() {
+      this.progress += this.speed;
+
+      if (this.progress >= 1) {
+        this.life -= 0.05;
+      }
+
+      // Smooth curve along path
+      const t = Math.min(this.progress, 1);
+      this.x = this.startX + (this.targetX - this.startX) * t;
+      this.y = this.startY + (this.targetY - this.startY) * t;
+
+      return this.life > 0;
+    }
+
+    draw() {
+      const alpha = this.life * (this.progress < 1 ? 0.8 : 1 - (this.progress - 1));
+
+      // Glow
+      const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
+      gradient.addColorStop(0, `hsla(${this.color}, 100%, 70%, ${alpha * 0.6})`);
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Core
+      ctx.fillStyle = `hsla(${this.color}, 100%, 80%, ${alpha})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+
+  // Create nodes in a random spread
+  const nodes = [];
+  const nodeCount = 25;
+  const padding = 50; // Keep nodes away from edges
+
+  for (let i = 0; i < nodeCount; i++) {
+    const x = padding + Math.random() * (canvas.width - padding * 2);
+    const y = padding + Math.random() * (canvas.height - padding * 2);
+    nodes.push(new NeuralNode(x, y));
+  }
+
+  // Signal particles
+  const signals = [];
+
+  // Find connections between nearby nodes
+  function updateConnections() {
+    const maxDistance = 150;
+
+    nodes.forEach(node => {
+      node.connections = [];
+      nodes.forEach(other => {
+        if (node !== other) {
+          const dx = other.x - node.x;
+          const dy = other.y - node.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxDistance) {
+            node.connections.push({ node: other, distance: dist });
+          }
+        }
+      });
+    });
+  }
+
+  // Spawn signal particles periodically
+  let signalTimer = 0;
+  function spawnSignals() {
+    signalTimer++;
+    if (signalTimer > 30) {
+      signalTimer = 0;
+
+      // Pick random node with connections
+      const node = nodes[Math.floor(Math.random() * nodes.length)];
+      if (node.connections.length > 0) {
+        const target = node.connections[Math.floor(Math.random() * node.connections.length)].node;
+        signals.push(new SignalParticle(node.x, node.y, target.x, target.y, node.hue));
+      }
+    }
+  }
+
+  // Animation loop
+  function animate() {
+    // Clear canvas with transparency
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Update connections
+    updateConnections();
+
+    // Draw connections
+    nodes.forEach(node => {
+      node.connections.forEach(conn => {
+        const alpha = (1 - conn.distance / 150) * 0.2;
+        const gradient = ctx.createLinearGradient(node.x, node.y, conn.node.x, conn.node.y);
+        gradient.addColorStop(0, `hsla(${node.hue}, 100%, 60%, ${alpha * node.energy})`);
+        gradient.addColorStop(1, `hsla(${conn.node.hue}, 100%, 60%, ${alpha * conn.node.energy})`);
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(node.x, node.y);
+        ctx.lineTo(conn.node.x, conn.node.y);
+        ctx.stroke();
+
+        // Draw connection midpoint glow
+        const midX = (node.x + conn.node.x) / 2;
+        const midY = (node.y + conn.node.y) / 2;
+        const pulseSize = 2 + Math.sin(Date.now() * 0.003 + conn.distance) * 1;
+
+        ctx.fillStyle = `hsla(${(node.hue + conn.node.hue) / 2}, 100%, 70%, ${alpha * 2})`;
+        ctx.beginPath();
+        ctx.arc(midX, midY, pulseSize, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    });
+
+    // Update and draw nodes
+    nodes.forEach(node => {
+      node.update();
+      node.draw();
+    });
+
+    // Update and draw signals
+    spawnSignals();
+    for (let i = signals.length - 1; i >= 0; i--) {
+      if (!signals[i].update()) {
+        signals.splice(i, 1);
+      } else {
+        signals[i].draw();
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // Start animation
+  animate();
+}
