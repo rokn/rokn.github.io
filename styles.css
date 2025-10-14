@@ -368,21 +368,22 @@ section {
   padding: 2rem 0;
 }
 
-/* Central zigzag line */
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(180deg,
-      var(--primary) 0%,
-      var(--secondary) 50%,
-      var(--accent) 100%);
-  transform: translateX(-50%);
-  box-shadow: 0 0 20px var(--primary);
-  animation: glowPulse 3s ease-in-out infinite;
+/* SVG DNA Helix is added dynamically via JavaScript */
+.dna-helix {
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.5));
+  animation: helixGlow 3s ease-in-out infinite;
+}
+
+@keyframes helixGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.5));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.7)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.5));
+  }
 }
 
 .timeline-item {
@@ -404,7 +405,7 @@ section {
 .timeline-item:nth-child(odd) {
   align-self: flex-end;
   text-align: right;
-  padding-right: 3rem;
+  padding-right: 5rem;
   padding-left: 0;
 }
 
@@ -412,7 +413,7 @@ section {
   align-self: flex-start;
   margin-left: 50%;
   text-align: left;
-  padding-left: 3rem;
+  padding-left: 5rem;
   padding-right: 0;
 }
 
@@ -420,7 +421,7 @@ section {
   display: none;
 }
 
-/* Icon nodes on the center line */
+/* Icon nodes positioned beside the helix */
 .timeline-item::before {
   content: attr(data-icon);
   position: absolute;
@@ -434,45 +435,30 @@ section {
   align-items: center;
   justify-content: center;
   font-size: 1.8rem;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4),
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.6),
+    0 0 60px rgba(124, 58, 237, 0.4),
     0 4px 10px rgba(0, 0, 0, 0.3);
   z-index: 10;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: helixNodePulse 3s ease-in-out infinite;
 }
 
 .timeline-item:nth-child(odd)::before {
-  right: -5.2rem;
+  right: -8rem;
 }
 
 .timeline-item:nth-child(even)::before {
-  left: -5.2rem;
+  left: -8rem;
 }
 
 .timeline-item:hover::before {
-  transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.6),
+  transform: scale(1.2) rotate(360deg);
+  box-shadow: 0 0 40px rgba(0, 212, 255, 1),
+    0 0 80px rgba(236, 72, 153, 0.6),
     0 8px 20px rgba(0, 0, 0, 0.4);
   border-color: var(--accent);
-  background: linear-gradient(135deg, var(--primary) 0%, rgba(30, 35, 45, 1) 100%);
-}
-
-/* Connector lines from cards to center */
-.timeline-item::after {
-  content: '';
-  position: absolute;
-  top: 35px;
-  width: 3rem;
-  height: 2px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  box-shadow: 0 0 10px var(--primary);
-}
-
-.timeline-item:nth-child(odd)::after {
-  right: 0;
-}
-
-.timeline-item:nth-child(even)::after {
-  left: 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  animation: none;
 }
 
 .timeline-card {
@@ -1133,6 +1119,48 @@ section {
   }
 }
 
+@keyframes helixFlow {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 200px;
+  }
+}
+
+@keyframes helixNodePulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.6),
+      0 0 60px rgba(124, 58, 237, 0.4),
+      0 4px 10px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(236, 72, 153, 0.8),
+      0 0 80px rgba(0, 212, 255, 0.6),
+      0 4px 10px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent);
+  }
+}
+
+@keyframes pulseConnection {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    box-shadow: 0 0 10px var(--primary);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px var(--accent);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 968px) {
   .nav-menu {
@@ -1164,8 +1192,23 @@ section {
     height: 300px;
   }
 
+  .dna-helix {
+    display: none;
+  }
+
+  /* Mobile simple line instead of helix */
   .timeline::before {
+    content: '';
+    position: absolute;
     left: 2rem;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg,
+        var(--primary) 0%,
+        var(--secondary) 50%,
+        var(--accent) 100%);
+    box-shadow: 0 0 10px var(--primary);
   }
 
   .timeline-item {

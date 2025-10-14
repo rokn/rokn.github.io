@@ -232,6 +232,171 @@ function populateJourney() {
       </div>
     </div>
   `).join('');
+
+  // Add DNA Helix SVG
+  createDNAHelix();
+}
+
+// Create animated DNA helix
+function createDNAHelix() {
+  const timeline = document.getElementById('timeline');
+  const timelineHeight = timeline.scrollHeight;
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'dna-helix');
+  svg.setAttribute('width', '160');
+  svg.setAttribute('height', timelineHeight);
+  svg.style.position = 'absolute';
+  svg.style.left = '50%';
+  svg.style.top = '0';
+  svg.style.transform = 'translateX(-50%)';
+  svg.style.pointerEvents = 'none';
+  svg.style.zIndex = '1';
+
+  // Create smooth DNA helix starting at maximum separation
+  const centerX = 80;
+  const amplitude = 40; // Width of the helix
+  const wavelength = 400; // Length of one complete wave cycle
+  const segmentLength = 10; // Distance between points for smooth curves
+  const numPoints = Math.ceil(timelineHeight / segmentLength);
+  const startPhase = Math.PI / 2; // Start at maximum separation (90 degrees)
+
+  // Build arrays of points for both strands
+  const leftPoints = [];
+  const rightPoints = [];
+  const connections = [];
+
+  for (let i = 0; i <= numPoints; i++) {
+    const y = i * segmentLength;
+    const angle = (y / wavelength) * Math.PI * 2 + startPhase;
+    const leftX = centerX + Math.sin(angle) * amplitude;
+    const rightX = centerX - Math.sin(angle) * amplitude;
+
+    leftPoints.push({ x: leftX, y: y });
+    rightPoints.push({ x: rightX, y: y });
+
+    // Add connection bars regularly (DNA base pairs)
+    if (i % 4 === 0 && y > 0 && y < timelineHeight) {
+      connections.push({ y, leftX, rightX });
+    }
+  }
+
+  // Create smooth curves using quadratic bezier
+  function createSmoothPath(points) {
+    if (points.length === 0) return '';
+
+    let path = `M ${points[0].x} ${points[0].y}`;
+
+    for (let i = 1; i < points.length - 1; i++) {
+      const xc = (points[i].x + points[i + 1].x) / 2;
+      const yc = (points[i].y + points[i + 1].y) / 2;
+      path += ` Q ${points[i].x} ${points[i].y}, ${xc} ${yc}`;
+    }
+
+    // Final point
+    const last = points[points.length - 1];
+    path += ` T ${last.x} ${last.y}`;
+
+    return path;
+  }
+
+  const leftPath = createSmoothPath(leftPoints);
+  const rightPath = createSmoothPath(rightPoints);
+
+  // Create left strand
+  const leftStrand = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  leftStrand.setAttribute('d', leftPath);
+  leftStrand.setAttribute('stroke', 'url(#grad-helix-1)');
+  leftStrand.setAttribute('stroke-width', '3');
+  leftStrand.setAttribute('fill', 'none');
+  leftStrand.setAttribute('stroke-linecap', 'round');
+
+  // Create right strand
+  const rightStrand = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  rightStrand.setAttribute('d', rightPath);
+  rightStrand.setAttribute('stroke', 'url(#grad-helix-2)');
+  rightStrand.setAttribute('stroke-width', '3');
+  rightStrand.setAttribute('fill', 'none');
+  rightStrand.setAttribute('stroke-linecap', 'round');
+
+  // Create gradients
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+  const grad1 = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+  grad1.setAttribute('id', 'grad-helix-1');
+  grad1.setAttribute('x1', '0%');
+  grad1.setAttribute('y1', '0%');
+  grad1.setAttribute('x2', '0%');
+  grad1.setAttribute('y2', '100%');
+  grad1.innerHTML = `
+    <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.8" />
+    <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:0.8" />
+    <stop offset="100%" style="stop-color:#ec4899;stop-opacity:0.8" />
+  `;
+
+  const grad2 = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+  grad2.setAttribute('id', 'grad-helix-2');
+  grad2.setAttribute('x1', '0%');
+  grad2.setAttribute('y1', '0%');
+  grad2.setAttribute('x2', '0%');
+  grad2.setAttribute('y2', '100%');
+  grad2.innerHTML = `
+    <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:0.8" />
+    <stop offset="50%" style="stop-color:#ec4899;stop-opacity:0.8" />
+    <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0.8" />
+  `;
+
+  defs.appendChild(grad1);
+  defs.appendChild(grad2);
+  svg.appendChild(defs);
+
+  // Add connection bars
+  connections.forEach((conn, i) => {
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', conn.leftX);
+    line.setAttribute('y1', conn.y);
+    line.setAttribute('x2', conn.rightX);
+    line.setAttribute('y2', conn.y);
+    line.setAttribute('stroke', `rgba(${i % 2 === 0 ? '0,212,255' : '124,58,237'}, 0.3)`);
+    line.setAttribute('stroke-width', '2');
+    line.style.animation = `pulseConnection ${2 + (i % 3)}s ease-in-out infinite`;
+    svg.appendChild(line);
+  });
+
+  svg.appendChild(leftStrand);
+  svg.appendChild(rightStrand);
+
+  // Add animated particles traveling along the strands
+  for (let i = 0; i < 8; i++) {
+    const particle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    particle.setAttribute('r', '3');
+    particle.setAttribute('fill', i % 2 === 0 ? '#00d4ff' : '#ec4899');
+    particle.setAttribute('opacity', '0.8');
+    particle.style.filter = 'blur(1px)';
+
+    const animateMotion = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+    animateMotion.setAttribute('dur', `${5 + i}s`);
+    animateMotion.setAttribute('repeatCount', 'indefinite');
+    animateMotion.setAttribute('path', i % 2 === 0 ? leftPath : rightPath);
+    animateMotion.setAttribute('rotate', 'auto');
+
+    particle.appendChild(animateMotion);
+    svg.appendChild(particle);
+  }
+
+  timeline.appendChild(svg);
+
+  // Add glow effect to the helix on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        svg.style.opacity = '1';
+        svg.style.transition = 'opacity 1s ease-in';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(timeline);
 }
 
 // Timeline filtering
