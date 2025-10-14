@@ -1,0 +1,65 @@
+{
+  "_comment": "This is a template file showing all available fields. Copy sections to data.json as needed.",
+  "personal": {
+    "name": "Your Name",
+    "title": "Your Professional Title",
+    "location": "City, Country",
+    "email": "your@email.com",
+    "phone": "+123 456 7890",
+    "github": "yourusername",
+    "linkedin": "your-linkedin-id",
+    "quote": "Your favorite quote",
+    "tagline": "A short tagline about you",
+    "bio": "A paragraph about who you are and what you do"
+  },
+  "journey_item_template": {
+    "id": "unique-identifier",
+    "type": "work or education",
+    "title": "Position or Degree Title",
+    "subtitle": "Short catchy subtitle",
+    "organization": "Company or School Name",
+    "period": "Month Year - Month Year",
+    "yearStart": 2020,
+    "yearEnd": 2025,
+    "description": "What you did, learned, or accomplished",
+    "icon": "🎓 or 💼 or any emoji",
+    "tags": [
+      "Skill1",
+      "Skill2",
+      "Technology1"
+    ]
+  },
+  "skills_template": {
+    "languages": [
+      "Language1",
+      "Language2"
+    ],
+    "technologies": [
+      "Framework1",
+      "Tool1"
+    ],
+    "databases": [
+      "Database1",
+      "Database2"
+    ],
+    "cloud": [
+      "CloudService1",
+      "CloudService2"
+    ]
+  },
+  "interest_template": {
+    "name": "Interest Name",
+    "description": "Detailed description of your interest",
+    "icon": "🤖 or any emoji",
+    "level": "expert, learning, or hobby"
+  },
+  "link_template": {
+    "title": "Link Title",
+    "url": "https://example.com",
+    "description": "What this link is about"
+  },
+  "philosophy_template": {
+    "title": "Your Philosophy Title",
+    "content": "A paragraph explaining your approach to work, learning, or life"
+  }
+}
