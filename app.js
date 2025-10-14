@@ -357,22 +357,7 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Smooth reveal on scroll for cards
-const revealOnScroll = () => {
-  const cards = document.querySelectorAll('.timeline-card, .skill-category, .interest-card, .link-card');
-
-  cards.forEach(card => {
-    const cardTop = card.getBoundingClientRect().top;
-    const windowHeight = window.innerHeight;
-
-    if (cardTop < windowHeight - 100) {
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
-    }
-  });
-};
-
-window.addEventListener('scroll', revealOnScroll);
+// Remove the old scroll reveal function as we're using IntersectionObserver now
 
 // Mouse trail effect removed per user request
 
@@ -478,40 +463,20 @@ const lazyLoadImages = () => {
 
 lazyLoadImages();
 
-// Add visual feedback to timeline cards
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    const timelineCards = document.querySelectorAll('.timeline-card');
-
-    timelineCards.forEach((card, index) => {
-      card.addEventListener('click', function () {
-        // Remove active class from all cards
-        timelineCards.forEach(c => c.classList.remove('active'));
-
-        // Add active class to clicked card
-        this.classList.add('active');
-
-        // Add a visual pulse effect
-        this.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-          this.style.animation = '';
-        }, 500);
-      });
-    });
-  }, 1000);
-});
+// Timeline card click interactions removed per user request
 
 // Intersection Observer for fade-in animations
 const observeElements = () => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Stop observing once visible
       }
     });
   }, {
-    threshold: 0.1
+    threshold: 0.1,
+    rootMargin: '0px 0px 100px 0px'
   });
 
   const elements = document.querySelectorAll('.timeline-item, .skill-category, .interest-card, .link-card');
