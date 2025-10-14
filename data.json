@@ -8,8 +8,11 @@
     "github": "rokn",
     "linkedin": "antonio-m-295760a7",
     "quote": "Any sufficiently advanced technology is indistinguishable from magic. - Arthur C. Clarke",
-    "tagline": "Diving into the gritty details of AI, systems, and emerging tech",
     "bio": "Senior developer with a passion for exploring the deepest layers of technology. From blockchain to AI, from 3D rendering to bioinformatics, I thrive on understanding how things really work beneath the surface."
+  },
+  "philosophy": {
+    "title": "Deep Dive Mentality",
+    "content": "I believe in going into the grittiest details of everything. Whether it's understanding how a database engine works at the byte level, diving into assembly to optimize performance, or reading research papers to implement cutting-edge AI algorithms - I always emerge more knowledgeable than before. Surface-level understanding is never enough."
   },
   "journey": [
     {
@@ -220,10 +223,6 @@
       "level": "hobby"
     }
   ],
-  "philosophy": {
-    "title": "Deep Dive Mentality",
-    "content": "I believe in going into the grittiest details of everything. Whether it's understanding how a database engine works at the byte level, diving into assembly to optimize performance, or reading research papers to implement cutting-edge AI algorithms - I always emerge more knowledgeable than before. Surface-level understanding is never enough."
-  },
   "links": [
     {
       "title": "Random Link 1",

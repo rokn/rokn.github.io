@@ -267,16 +267,34 @@ function populateHero() {
   typeWriter(document.getElementById('hero-subtitle'), personal.title, 50);
 }
 
-// Typing effect
+// Typing effect with cursor
 function typeWriter(element, text, speed) {
   let i = 0;
   element.textContent = '';
 
+  // Add cursor (insert mode - thin bar)
+  element.innerHTML = '<span class="typing-cursor insert-mode">|</span>';
+
   function type() {
     if (i < text.length) {
-      element.textContent += text.charAt(i);
+      const cursor = element.querySelector('.typing-cursor');
+      const currentText = text.substring(0, i + 1);
+      element.innerHTML = currentText + '<span class="typing-cursor insert-mode">|</span>';
       i++;
       setTimeout(type, speed);
+    } else {
+      // Switch to normal mode (block cursor) after typing is complete
+      setTimeout(() => {
+        // Get the last character for the block cursor
+        const lastChar = text.charAt(text.length - 1);
+        const textWithoutLast = text.substring(0, text.length - 1);
+        element.innerHTML = textWithoutLast + '<span class="typing-cursor normal-mode">' + lastChar + '</span>';
+
+        // Remove cursor after 2.5 flashes (2.5 seconds)
+        setTimeout(() => {
+          element.innerHTML = text;
+        }, 2500);
+      }, 500);
     }
   }
 
