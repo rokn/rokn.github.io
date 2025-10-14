@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initNavigation();
   initScrollAnimations();
   populateHero();
+  populateSections();
   populateJourney();
   populateSkills();
   populateInterests();
@@ -299,6 +300,51 @@ function typeWriter(element, text, speed) {
   }
 
   type();
+}
+
+// Populate Section Titles and Descriptions
+function populateSections() {
+  if (!portfolioData || !portfolioData.sections) return;
+
+  const { sections } = portfolioData;
+
+  // Populate Journey section
+  if (sections.journey) {
+    const journeyTitle = document.getElementById('journey-title');
+    const journeyDescription = document.getElementById('journey-description');
+    if (journeyTitle) journeyTitle.textContent = sections.journey.title;
+    if (journeyDescription) journeyDescription.textContent = sections.journey.description;
+  }
+
+  // Populate Skills section
+  if (sections.skills) {
+    const skillsTitle = document.getElementById('skills-title');
+    if (skillsTitle) skillsTitle.textContent = sections.skills.title;
+  }
+
+  // Populate Interests section
+  if (sections.interests) {
+    const interestsTitle = document.getElementById('interests-title');
+    const interestsDescription = document.getElementById('interests-description');
+    if (interestsTitle) interestsTitle.textContent = sections.interests.title;
+    if (interestsDescription) interestsDescription.textContent = sections.interests.description;
+  }
+
+  // Populate Links section
+  if (sections.links) {
+    const linksTitle = document.getElementById('links-title');
+    const linksDescription = document.getElementById('links-description');
+    if (linksTitle) linksTitle.textContent = sections.links.title;
+    if (linksDescription) linksDescription.textContent = sections.links.description;
+  }
+
+  // Populate Contact section
+  if (sections.contact) {
+    const contactTitle = document.getElementById('contact-title');
+    const contactDescription = document.getElementById('contact-description');
+    if (contactTitle) contactTitle.textContent = sections.contact.title;
+    if (contactDescription) contactDescription.textContent = sections.contact.description;
+  }
 }
 
 // Populate Journey Timeline

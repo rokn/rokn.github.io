@@ -234,5 +234,27 @@
       "url": "https://example.com",
       "description": "Add your link description here"
     }
-  ]
+  ],
+  "sections": {
+    "journey": {
+      "title": "My Journey",
+      "description": "From systems programming to AI development - a path of continuous learning and deep exploration"
+    },
+    "skills": {
+      "title": "Technical Arsenal",
+      "description": ""
+    },
+    "interests": {
+      "title": "Beyond Code",
+      "description": "Where technology meets passion and curiosity"
+    },
+    "links": {
+      "title": "Random Stuff",
+      "description": "Interesting links, projects, and things worth sharing"
+    },
+    "contact": {
+      "title": "Let's Connect",
+      "description": "Whether you want to discuss AI, blockchain, bioinformatics, or just chat about the intricacies of technology - I'm always open to interesting conversations."
+    }
+  }
 }
