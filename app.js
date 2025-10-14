@@ -504,21 +504,148 @@ function populateSkills() {
   const skillsGrid = document.getElementById('skills-grid');
   const { skills } = portfolioData;
 
-  const categories = [
-    { title: 'Programming Languages', items: skills.languages },
-    { title: 'Technologies & Frameworks', items: skills.technologies },
-    { title: 'Databases', items: skills.databases },
-    { title: 'Cloud & DevOps', items: skills.cloud }
-  ];
+  // Get featured skills from data
+  const featuredSkills = skills.featured || [];
 
-  skillsGrid.innerHTML = categories.map(category => `
-    <div class="skill-category">
+  // Create categories directly from the skills object keys
+  const categories = Object.keys(skills)
+    .filter(key => key !== 'featured') // Exclude featured as it's not a category
+    .map(key => ({
+      title: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize first letter
+      items: skills[key]
+    }));
+
+  skillsGrid.innerHTML = categories.map((category, categoryIndex) => `
+    <div class="skill-category" style="animation-delay: ${categoryIndex * 0.1}s">
       <h3 class="skill-category-title">${category.title}</h3>
       <div class="skill-items">
-        ${category.items.map(item => `<span class="skill-item">${item}</span>`).join('')}
+        ${category.items.map(item => {
+    const isFeatured = featuredSkills.includes(item);
+    return `<span class="skill-item ${isFeatured ? 'featured' : ''}" data-skill="${item}">${item}</span>`;
+  }).join('')}
       </div>
     </div>
   `).join('');
+
+  // Add click ripple effect to skill items
+  addSkillInteractivity();
+
+  // Add sparkle effects to featured skills
+  addSparkleEffects();
+}
+
+// Add interactive effects to skills
+function addSkillInteractivity() {
+  const skillItems = document.querySelectorAll('.skill-item');
+  const skillCategories = document.querySelectorAll('.skill-category');
+
+  // Add 3D tilt effect to categories
+  skillCategories.forEach(category => {
+    category.addEventListener('mousemove', function (e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 20;
+      const rotateY = (centerX - x) / 20;
+
+      this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+    });
+
+    category.addEventListener('mouseleave', function () {
+      this.style.transform = '';
+    });
+  });
+
+  skillItems.forEach(item => {
+    // Add click ripple effect
+    item.addEventListener('click', function (e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('ripple-effect');
+
+      this.appendChild(ripple);
+
+      // Add a bounce animation
+      this.style.animation = 'skillBounce 0.5s ease';
+
+      setTimeout(() => {
+        ripple.remove();
+        this.style.animation = '';
+      }, 600);
+    });
+
+    // Add particle burst effect on hover
+    item.addEventListener('mouseenter', function () {
+      createSkillParticles(this);
+    });
+  });
+}
+
+// Create particle burst effect around skill items
+function createSkillParticles(element) {
+  const rect = element.getBoundingClientRect();
+  const particleCount = 5;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('skill-particle');
+
+    const angle = (Math.PI * 2 * i) / particleCount;
+    const velocity = 30 + Math.random() * 20;
+    const x = Math.cos(angle) * velocity;
+    const y = Math.sin(angle) * velocity;
+
+    particle.style.left = rect.left + rect.width / 2 + 'px';
+    particle.style.top = rect.top + rect.height / 2 + 'px';
+    particle.style.setProperty('--tx', x + 'px');
+    particle.style.setProperty('--ty', y + 'px');
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 800);
+  }
+}
+
+// Add sparkle effects to featured skills
+function addSparkleEffects() {
+  const featuredItems = document.querySelectorAll('.skill-item.featured');
+
+  featuredItems.forEach(item => {
+    // Create sparkles periodically
+    setInterval(() => {
+      if (Math.random() > 0.3) { // 70% chance to sparkle
+        createSparkle(item);
+      }
+    }, 2000);
+  });
+}
+
+// Create a sparkle effect
+function createSparkle(element) {
+  const rect = element.getBoundingClientRect();
+  const sparkle = document.createElement('div');
+  sparkle.classList.add('sparkle');
+
+  // Random position around the element
+  const offsetX = (Math.random() - 0.5) * rect.width;
+  const offsetY = (Math.random() - 0.5) * rect.height;
+
+  sparkle.style.left = rect.left + rect.width / 2 + offsetX + 'px';
+  sparkle.style.top = rect.top + rect.height / 2 + offsetY + 'px';
+  sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+
+  document.body.appendChild(sparkle);
+
+  setTimeout(() => sparkle.remove(), 1000);
 }
 
 // Populate Interests

@@ -154,7 +154,13 @@
     }
   ],
   "skills": {
-    "languages": [
+    "featured": [
+      "GoLang",
+      "React",
+      "PostgreSQL",
+      "GCP"
+    ],
+    "Programming Languages": [
       "GoLang",
       "Java",
       "JavaScript",
@@ -163,24 +169,23 @@
       "C++",
       "Kotlin"
     ],
-    "technologies": [
+    "Technologies & Frameworks": [
       "React",
       "Redux",
       "Android",
-      "Kafka",
-      "HTML5",
-      "Git"
+      "Kafka"
     ],
-    "databases": [
-      "Redis",
+    "Databases": [
       "PostgreSQL",
+      "Redis",
       "MongoDB",
       "SQLite",
       "Firebase"
     ],
-    "cloud": [
+    "Cloud & DevOps": [
       "GCP",
-      "CI/CD"
+      "CI/CD",
+      "Git"
     ]
   },
   "interests": [
