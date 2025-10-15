@@ -11,25 +11,30 @@
     "bio": "Senior developer with a passion for exploring the deepest layers of technology. From blockchain to AI, from 3D rendering to bioinformatics, I thrive on understanding how things really work beneath the surface."
   },
   "philosophy": {
-    "title": "Deep Dive Mentality",
-    "content": "I believe in going into the grittiest details of everything. Whether it's understanding how a database engine works at the byte level, diving into assembly to optimize performance, or reading research papers to implement cutting-edge AI algorithms - I always emerge more knowledgeable than before. Surface-level understanding is never enough."
+    "title": "Exploration Mentality",
+    "content": "I believe in pursuing deep understanding as a fundamental principle. Whether it's diving into the intricate workings of distributed systems, searching the whole internet for that lost thread which gives the truth, or reading research papers to implement cutting-edge algorithms - each journey into complexity reveals new layers of understanding. Surface-level understanding is merely the beginning; true knowledge emerges from embracing the profound interconnectedness of all systems."
   },
   "journey": [
     {
       "id": "tues",
       "type": "education",
-      "title": "TUES High School",
+      "title": "TUES",
       "subtitle": "Systems Programming",
       "organization": "Technological School 'Electronic Systems'",
       "period": "2012-2017",
       "yearStart": 2012,
       "yearEnd": 2017,
-      "description": "Where it all began - diving deep into systems programming and laying the foundation for a career in software development.",
+      "description": "Where it all began - diving into systems programming and laying the foundation for a career in software development.",
       "icon": "🎓",
       "tags": [
         "C++",
+        "Ruby",
+        "Networking",
+        "Embedded Systems",
+        "Linux",
         "Systems Programming",
-        "Algorithms"
+        "Algorithms",
+        "Data Structures"
       ]
     },
     {
@@ -41,10 +46,11 @@
       "period": "Apr 2017 - Dec 2017",
       "yearStart": 2017,
       "yearEnd": 2017,
-      "description": "Learned professional development practices, worked directly with clients, and provided innovative solutions.",
+      "description": "Learned professional development practices, worked directly with clients, and provided valuable solutions.",
       "icon": "📱",
       "tags": [
         "Android",
+        "Java",
         "Kotlin",
         "Client Work"
       ]
@@ -53,17 +59,23 @@
       "id": "university",
       "type": "education",
       "title": "Bachelor's in Informatics",
-      "subtitle": "Sofia University",
+      "subtitle": "Another step in the learning journey",
       "organization": "Sofia University 'St. Kliment Ohridski'",
-      "period": "2017-2022",
+      "period": "2017-2021",
       "yearStart": 2017,
-      "yearEnd": 2022,
+      "yearEnd": 2021,
       "description": "Advanced computer science education while working professionally, expanding theoretical knowledge alongside practical experience.",
       "icon": "🎓",
       "tags": [
         "Algorithms",
         "Data Structures",
-        "Theory"
+        "Discrete Mathematics",
+        "Algebra",
+        "Calculus",
+        "Statistics",
+        "Numerical Analysis",
+        "Cryptography",
+        "Computer Graphics"
       ]
     },
     {
@@ -75,31 +87,36 @@
       "period": "Jul 2018 - Jun 2022",
       "yearStart": 2018,
       "yearEnd": 2022,
-      "description": "Worked on build systems, R&D networking projects, full-stack development with React and GoLang, and led a Python-based project from inception.",
+      "description": "Developed and maintained build systems supporting 300+ developers, contributed to implementation of a distributed rendering library from scratch. Collaborated with cross-functional teams on Cosmos, a new 3D asset library product within the Chaos suite, working directly with product stakeholders to deliver optimal user experience.",
       "icon": "🎨",
       "tags": [
         "GoLang",
         "Python",
         "React",
-        "Build Systems",
-        "R&D"
+        "CMake",
+        "C++",
+        "GCP",
+        "Distributed systems"
       ]
     },
     {
       "id": "limechain-senior",
       "type": "work",
       "title": "Senior Blockchain Developer",
-      "subtitle": "Stabilizing Crypto Infrastructure",
+      "subtitle": "Blockchain Infrastructure & Web3 Solutions",
       "organization": "LimeChain - Blockchain & Web3 Solutions",
       "period": "Aug 2022 - Jun 2023",
       "yearStart": 2022,
       "yearEnd": 2023,
-      "description": "Stabilized and improved HashPort crypto bridge, ensured codebase quality with testing and CI/CD improvements, and provided crucial support during major incidents.",
+      "description": "Managed HashPort cryptocurrency bridge platform, leading complete system stabilization and architectural improvements. Designed and implemented comprehensive testing frameworks and optimized CI/CD pipelines to ensure production reliability. Managed critical incident response and provided 24/7 technical support during high-impact production events.",
       "icon": "⛓️",
       "tags": [
         "Blockchain",
         "Web3",
+        "Smart Contracts",
         "CI/CD",
+        "GCP",
+        "AWS",
         "Testing"
       ]
     },
@@ -112,7 +129,7 @@
       "period": "Jun 2023 - Jan 2024",
       "yearStart": 2023,
       "yearEnd": 2024,
-      "description": "Oversaw all technical aspects, proactively suggested enhancements, and facilitated integration and mentorship of new team members.",
+      "description": "Led engineering teams and established technical vision for blockchain infrastructure. Mentored developers, drove architectural decisions, and aligned technical strategy with business goals.",
       "icon": "👨‍💼",
       "tags": [
         "Leadership",
@@ -126,14 +143,16 @@
       "title": "Senior Java Developer",
       "subtitle": "Plugin Architecture",
       "organization": "EGT Digital",
-      "period": "Sep 2024 - Present",
+      "period": "Sep 2024 - Mar 2025",
       "yearStart": 2024,
       "yearEnd": 2025,
-      "description": "Part of a newly formed team developing plugins for the core system.",
-      "icon": "☕",
+      "description": "Developed and maintained core system plugins, integrating Kafka messaging, implementing distributed systems, and ensuring system design standards.",
+      "icon": "🎮",
       "tags": [
         "Java",
-        "Plugin Architecture",
+        "Spring",
+        "Kafka",
+        "Distributed Systems",
         "System Design"
       ]
     },
@@ -146,13 +165,31 @@
       "period": "Mar 2025 - Present",
       "yearStart": 2025,
       "yearEnd": 2025,
-      "description": "Working on LangCache, leveraging Redis to provide semantic caching for AI applications, developing innovative solutions to optimize AI model performance.",
+      "description": "Developing and maintaining LangCache, a semantic caching solution for AI applications, optimizing model performance and reducing latency.",
       "icon": "🤖",
       "tags": [
-        "AI",
+        "LLMs",
+        "GoLang",
         "Redis",
-        "Semantic Caching",
-        "Performance"
+        "Distributed Systems",
+        "Semantic Caching"
+      ]
+    },
+    {
+      "id": "university-bmi",
+      "type": "education",
+      "title": "Master's in Bioinformatics",
+      "subtitle": "Learning continues",
+      "organization": "University of Sofia 'St. Kliment Ohridski'",
+      "period": "Sep 2025 - Present",
+      "yearStart": 2025,
+      "yearEnd": 2027,
+      "description": "Currently studying bioinformatics, exploring the intersection of computer science and biology.",
+      "icon": "🧬",
+      "tags": [
+        "Bioinformatics",
+        "Computational Biology",
+        "Molecular Biology"
       ]
     }
   ],
@@ -194,33 +231,28 @@
   "interests": [
     {
       "name": "Artificial Intelligence",
-      "description": "Passionate about AI technologies, semantic caching, and optimizing ML model performance. Currently working on LangCache at Redis.",
-      "icon": "🤖",
-      "level": "expert"
+      "description": "Passionate about AI technologies since high school, I believe that AI is the future and will change the world as we know it.",
+      "icon": "🤖"
     },
     {
       "name": "Bioinformatics",
       "description": "Recently exploring the intersection of computer science and biology, fascinated by computational approaches to biological problems.",
-      "icon": "🧬",
-      "level": "learning"
+      "icon": "🧬"
     },
     {
       "name": "3D Printing",
       "description": "Love bringing digital designs into the physical world, experimenting with materials and creating functional objects.",
-      "icon": "🖨️",
-      "level": "hobby"
+      "icon": "🖨️"
     },
     {
       "name": "Archery",
-      "description": "Finding focus and precision through traditional archery, where every detail matters.",
-      "icon": "🏹",
-      "level": "hobby"
+      "description": "Finding focus and precision through traditional archery, where every shot matters.",
+      "icon": "🏹"
     },
     {
       "name": "Horse Riding",
-      "description": "Connecting with nature and developing trust and communication with magnificent animals.",
-      "icon": "🐴",
-      "level": "hobby"
+      "description": "Connecting with nature and developing trust and communication with majestic animals.",
+      "icon": "🐴"
     }
   ],
   "links": [

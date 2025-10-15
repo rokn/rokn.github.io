@@ -67,8 +67,7 @@ All content is stored in `data.json`. Simply edit this file to update:
   {
     "name": "Interest Name",
     "description": "Description",
-    "icon": "🤖",
-    "level": "expert" | "learning" | "hobby"
+    "icon": "🤖"
   }
 ]
 ```

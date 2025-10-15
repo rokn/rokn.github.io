@@ -1316,18 +1316,6 @@ section {
   margin-bottom: 1rem;
 }
 
-.interest-level {
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  background: rgba(124, 58, 237, 0.2);
-  border: 1px solid rgba(124, 58, 237, 0.4);
-  border-radius: 20px;
-  color: var(--secondary);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
 /* Philosophy Section */
 .philosophy-card {
   max-width: 800px;

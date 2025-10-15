@@ -50,8 +50,7 @@
   "interest_template": {
     "name": "Interest Name",
     "description": "Detailed description of your interest",
-    "icon": "🤖 or any emoji",
-    "level": "expert, learning, or hobby"
+    "icon": "🤖 or any emoji"
   },
   "link_template": {
     "title": "Link Title",

@@ -725,7 +725,6 @@ function populateInterests() {
       <div class="interest-icon">${interest.icon}</div>
       <h3 class="interest-name">${interest.name}</h3>
       <p class="interest-description">${interest.description}</p>
-      <span class="interest-level">${interest.level}</span>
     </div>
   `).join('');
 }

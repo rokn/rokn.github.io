@@ -61,13 +61,10 @@ Change your hobbies, AI focus, or bioinformatics interest:
   {
     "name": "Artificial Intelligence",
     "description": "Update this with your latest AI projects",
-    "icon": "🤖",
-    "level": "expert"
+    "icon": "🤖"
   }
 ]
 ```
-
-**Levels**: Use `"expert"`, `"learning"`, or `"hobby"`
 
 ### 4. Change Your Philosophy
 ```json
